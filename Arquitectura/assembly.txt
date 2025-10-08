@@ -1,0 +1,32 @@
+.data
+    x: .long 10
+    y: .long 45
+    z: .long 25
+    msg1: .string "x = %d\n"
+    msg2: .string "y = %d\n"
+.text
+.global main
+main:
+    //if(z>25){
+    cmpl $25,z
+    jg then
+    jmp else
+then:
+    movl x,%eax
+    addl y,%eax //(x) -> x+y
+    movl %eax,x
+    jmp endif
+    //}
+else:
+    //else{
+    movl x,%eax
+    subl y,%eax
+    movl %eax,x
+    //}
+endif:
+    movl $msg1,%edi
+    movl x,%esi
+    movl $0, %eax
+    call printf
+    xor %eax,%eax
+    ret
